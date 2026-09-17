@@ -226,9 +226,9 @@
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 10px 8px;
+            padding: 8px 6px;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         th {
@@ -240,11 +240,19 @@
         .slot-pill {
             background: #e0fbfc;
             border-left: 3px solid var(--primary);
-            padding: 4px 6px;
+            padding: 3px 5px;
             border-radius: 3px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
             word-break: break-word;
+        }
+
+        .break-row {
+            background-color: #f8fafc;
+            font-weight: bold;
+            color: #475569;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
         .error {
@@ -339,13 +347,18 @@
             z-index: 0;
         }
 
-        /* General Print Cleanup & Scaling Styles */
+        /* General Print Cleanup & Scaling Styles (Strict max 2 pages & tight heading spacing) */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+
             body {
                 background-color: #ffffff;
                 padding: 0;
                 width: 100%;
-                font-size: 11px;
+                font-size: 10px;
             }
             
             .container > .card:not(#printCardContainer), 
@@ -367,7 +380,15 @@
                 padding: 0;
                 margin: 0;
                 width: 100%;
-                page-break-after: always;
+                page-break-inside: auto;
+            }
+
+            .card h2 {
+                font-size: 1rem !important;
+                margin-bottom: 4px !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
+                line-height: 1.2;
             }
 
             .table-responsive {
@@ -375,24 +396,29 @@
             }
 
             table {
-                page-break-inside: avoid;
                 width: 100% !important;
                 min-width: auto !important;
-                table-layout: fixed;
+                table-layout: auto;
+                font-size: 9px !important;
             }
 
             th, td {
-                border: 1px solid #ccc;
+                border: 1px solid #94a3b8;
                 word-wrap: break-word;
                 overflow-wrap: break-word;
-                padding: 4px 2px !important;
-                font-size: 0.7rem !important;
+                padding: 2px 2px !important;
+                font-size: 0.65rem !important;
             }
 
             .slot-pill {
-                padding: 2px 3px;
-                font-size: 0.65rem !important;
+                padding: 1px 2px;
+                font-size: 0.6rem !important;
                 border-left-width: 2px;
+            }
+            
+            .break-row td {
+                padding: 3px 2px !important;
+                font-size: 0.65rem !important;
             }
         }
     </style>
@@ -408,11 +434,11 @@
         <div class="global-settings">
             <div class="form-group">
                 <label for="periodsPerDay">Number of Periods Per Day (Max 8)</label>
-                <input type="number" id="periodsPerDay" value="7" min="1" max="8" onchange="updatePeriodDropdowns()">
+                <input type="number" id="periodsPerDay" value="7" min="1" max="8" onchange="saveSettings(); updatePeriodDropdowns()">
             </div>
             <div class="form-group">
                 <label for="timetableFormat">Timetable Layout Style</label>
-                <select id="timetableFormat">
+                <select id="timetableFormat" onchange="saveSettings()">
                     <option value="highschool">Print Highschool format (Master Grid)</option>
                     <option value="primary">Print primary format</option>
                     <option value="kg">Print KG format</option>
@@ -420,15 +446,15 @@
             </div>
             <div class="form-group">
                 <label for="pageTitleInput">Print Page Title / Header text</label>
-                <input type="text" id="pageTitleInput" value="Adika Youth Academy High School Tentative Class Schedule">
+                <input type="text" id="pageTitleInput" value="Adika Youth Academy High School Tentative Class Schedule" oninput="saveSettings()">
             </div>
             <div class="form-group">
                 <label for="logoUrl">School Logo URL (Image link)</label>
-                <input type="text" id="logoUrl" placeholder="https://example.com/logo.png">
+                <input type="text" id="logoUrl" value="https://raw.githubusercontent.com/birhanumekonen09-dotcom/Time-Table-Generator/refs/heads/main/1789151578983.jpg" placeholder="https://example.com/logo.png" oninput="saveSettings()">
             </div>
             <div class="form-group">
                 <label for="logoPosition">Logo Placement Option</label>
-                <select id="logoPosition">
+                <select id="logoPosition" onchange="saveSettings()">
                     <option value="top">Top Header</option>
                     <option value="watermark">Watermark</option>
                     <option value="bottom">Bottom Footer</option>
@@ -521,7 +547,7 @@
             <div class="generation-options">
                 <div class="form-group">
                     <label for="genMode">Generation Mode</label>
-                    <select id="genMode" onchange="toggleGenMode()">
+                    <select id="genMode" onchange="saveSettings(); toggleGenMode()">
                         <option value="all">All Grades & Sections</option>
                         <option value="range">Grade Range (Master Table)</option>
                         <option value="single">Single Grade & Section</option>
@@ -529,19 +555,19 @@
                 </div>
                 <div class="form-group" id="rangeStartGroup" style="display:none;">
                     <label for="rangeStart">From Grade</label>
-                    <select id="rangeStart"></select>
+                    <select id="rangeStart" onchange="saveSettings()"></select>
                 </div>
                 <div class="form-group" id="rangeEndGroup" style="display:none;">
                     <label for="rangeEnd">To Grade</label>
-                    <select id="rangeEnd"></select>
+                    <select id="rangeEnd" onchange="saveSettings()"></select>
                 </div>
                 <div class="form-group" id="singleGradeGroup" style="display:none;">
                     <label for="singleGrade">Target Grade</label>
-                    <select id="singleGrade"></select>
+                    <select id="singleGrade" onchange="saveSettings()"></select>
                 </div>
                 <div class="form-group" id="singleSectionGroup" style="display:none;">
                     <label for="singleSection">Target Section</label>
-                    <select id="singleSection">
+                    <select id="singleSection" onchange="saveSettings()">
                         <option value="A">Section A</option>
                         <option value="B">Section B</option>
                         <option value="C">Section C</option>
@@ -581,7 +607,12 @@
         "Grade 11", "Grade 12"
     ];
 
-    let subjects = [
+    let subjects = [];
+    let generatedOptions = [];
+    let currentOptionIndex = 0;
+    let cachedTargetClassKeys = [];
+
+    const defaultSubjects = [
         { id: 1, name: "Mathematics", teacher: "Mr. Abebe", credits: 5, allowDouble: "yes", grade: "Grade 12", section: "A", from: 1, to: 7 },
         { id: 2, name: "English", teacher: "Ms. Sara", credits: 4, allowDouble: "no", grade: "Grade 12", section: "A", from: 1, to: 7 },
         { id: 3, name: "Mathematics", teacher: "Mr. Abebe", credits: 5, allowDouble: "yes", grade: "Grade 12", section: "B", from: 1, to: 7 },
@@ -589,9 +620,59 @@
         { id: 5, name: "Chemistry", teacher: "Dr. Kebede", credits: 4, allowDouble: "no", grade: "Grade 10", section: "A", from: 1, to: 7 }
     ];
 
-    let generatedOptions = [];
-    let currentOptionIndex = 0;
-    let cachedTargetClassKeys = [];
+    function loadSavedData() {
+        // Load subjects
+        const savedSubjects = localStorage.getItem('timetable_subjects');
+        if (savedSubjects) {
+            try {
+                subjects = JSON.parse(savedSubjects);
+            } catch(e) {
+                subjects = defaultSubjects;
+            }
+        } else {
+            subjects = defaultSubjects;
+        }
+
+        // Load global/scope settings
+        const savedSettings = localStorage.getItem('timetable_settings');
+        if (savedSettings) {
+            try {
+                const s = JSON.parse(savedSettings);
+                if (s.periodsPerDay) document.getElementById('periodsPerDay').value = s.periodsPerDay;
+                if (s.timetableFormat) document.getElementById('timetableFormat').value = s.timetableFormat;
+                if (s.pageTitleInput) document.getElementById('pageTitleInput').value = s.pageTitleInput;
+                if (s.logoUrl !== undefined) document.getElementById('logoUrl').value = s.logoUrl;
+                if (s.logoPosition) document.getElementById('logoPosition').value = s.logoPosition;
+                if (s.genMode) document.getElementById('genMode').value = s.genMode;
+                if (s.rangeStart) document.getElementById('rangeStart').value = s.rangeStart;
+                if (s.rangeEnd) document.getElementById('rangeEnd').value = s.rangeEnd;
+                if (s.singleGrade) document.getElementById('singleGrade').value = s.singleGrade;
+                if (s.singleSection) document.getElementById('singleSection').value = s.singleSection;
+            } catch(e) {
+                console.error("Could not parse saved settings", e);
+            }
+        }
+    }
+
+    function saveSubjectsToStorage() {
+        localStorage.setItem('timetable_subjects', JSON.stringify(subjects));
+    }
+
+    function saveSettings() {
+        const settings = {
+            periodsPerDay: document.getElementById('periodsPerDay').value,
+            timetableFormat: document.getElementById('timetableFormat').value,
+            pageTitleInput: document.getElementById('pageTitleInput').value,
+            logoUrl: document.getElementById('logoUrl').value,
+            logoPosition: document.getElementById('logoPosition').value,
+            genMode: document.getElementById('genMode').value,
+            rangeStart: document.getElementById('rangeStart').value,
+            rangeEnd: document.getElementById('rangeEnd').value,
+            singleGrade: document.getElementById('singleGrade').value,
+            singleSection: document.getElementById('singleSection').value
+        };
+        localStorage.setItem('timetable_settings', JSON.stringify(settings));
+    }
 
     function getShortSubjectName(fullName) {
         if (!fullName) return "";
@@ -641,8 +722,10 @@
         });
 
         gradeSelect.value = "Grade 12";
-        rangeStart.value = "Grade 9";
-        rangeEnd.value = "Grade 12";
+        
+        // If settings weren't loaded or initialized, set sensible defaults
+        if(!rangeStart.value) rangeStart.value = "Grade 9";
+        if(!rangeEnd.value) rangeEnd.value = "Grade 12";
 
         updatePeriodDropdowns();
         toggleGenMode();
@@ -755,6 +838,7 @@
         
         nameInput.value = '';
         teacherInput.value = '';
+        saveSubjectsToStorage();
         renderSubjects();
     }
 
@@ -777,6 +861,7 @@
 
     function removeSubject(index) {
         subjects.splice(index, 1);
+        saveSubjectsToStorage();
         renderSubjects();
     }
 
@@ -905,6 +990,7 @@
     }
 
     function generateTimetable() {
+        saveSettings();
         const errorMsg = document.getElementById('errorMsg');
         errorMsg.textContent = '';
 
@@ -1005,8 +1091,8 @@
         const logoUrl = document.getElementById('logoUrl').value.trim();
         const logoPos = document.getElementById('logoPosition').value;
 
-        let logoHTMLTop = (logoUrl && logoPos === 'top') ? `<div style="text-align:center; margin-bottom:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:60px;"></div>` : '';
-        let logoHTMLBottom = (logoUrl && logoPos === 'bottom') ? `<div style="text-align:center; margin-top:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:60px;"></div>` : '';
+        let logoHTMLTop = (logoUrl && logoPos === 'top') ? `<div style="text-align:center; margin-bottom:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:50px;"></div>` : '';
+        let logoHTMLBottom = (logoUrl && logoPos === 'bottom') ? `<div style="text-align:center; margin-top:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:50px;"></div>` : '';
         let logoHTMLWatermark = (logoUrl && logoPos === 'watermark') ? `<img src="${logoUrl}" class="watermark-img" alt="Watermark">` : '';
 
         if (formatType === 'highschool' || document.getElementById('genMode').value === 'range') {
@@ -1014,7 +1100,7 @@
                 <div class="card watermark-container">
                     ${logoHTMLWatermark}
                     ${logoHTMLTop}
-                    <h2>${pageTitle} (Option ${currentOptionIndex + 1})</h2>
+                    <h2>${pageTitle}</h2>
                     <div class="table-responsive">
                         <table>
                             <thead>
@@ -1037,17 +1123,18 @@
 
             let timeSlots = [
                 "2:40-3:25", "3:25-4:10", "4:10-4:55", 
-                "5:30-6:15", "6:15-7:00", "7:45-8:30", "8:30-9:15", "9:15-10:00"
+                "5:30-6:15", "6:15-7:00", "7:45-8:30", "8:30-9:15"
             ];
+            const totalColsCount = 3 + targetClassKeys.length;
 
             days.forEach((day, dIdx) => {
                 for (let p = 0; p < periodsPerDay; p++) {
                     masterHTML += `<tr>`;
                     if (p === 0) {
-                        masterHTML += `<td rowspan="${periodsPerDay}" style="font-weight:bold; vertical-align:middle; background:#f8fafc;">${day}</td>`;
+                        masterHTML += `<td rowspan="${periodsPerDay + 2}" style="font-weight:bold; vertical-align:middle; background:#f8fafc;">${day}</td>`;
                     }
                     masterHTML += `<td><strong>P ${p + 1}</strong></td>`;
-                    masterHTML += `<td style="font-size:0.75rem; color:#475569;">${timeSlots[p] || ''}</td>`;
+                    masterHTML += `<td style="font-size:0.7rem; color:#475569;">${timeSlots[p] || ''}</td>`;
 
                     targetClassKeys.forEach(key => {
                         let classData = classGrids[key];
@@ -1056,6 +1143,23 @@
                         masterHTML += `<td>${cellContent}</td>`;
                     });
                     masterHTML += `</tr>`;
+
+                    if (p === 2) {
+                        masterHTML += `
+                            <tr class="break-row">
+                                <td>Break</td>
+                                <td colspan="${totalColsCount - 2}">Break Time 4:55-5:25</td>
+                            </tr>
+                        `;
+                    }
+                    if (p === 4) {
+                        masterHTML += `
+                            <tr class="break-row">
+                                <td>Lunch</td>
+                                <td colspan="${totalColsCount - 2}">Lunch Time 7:00-7:40</td>
+                            </tr>
+                        `;
+                    }
                 }
             });
 
@@ -1078,7 +1182,7 @@
                     <div class="card watermark-container">
                         ${logoHTMLWatermark}
                         ${logoHTMLTop}
-                        <h2>${pageTitle} — ${grade} Section ${section} (Option ${currentOptionIndex + 1})</h2>
+                        <h2>${pageTitle} — ${grade} Section ${section}</h2>
                         <div class="table-responsive">
                             <table>
                                 <thead>
@@ -1102,6 +1206,13 @@
                         cardHTML += `<td>${cellContent}</td>`;
                     });
                     cardHTML += `</tr>`;
+
+                    if (p === 2) {
+                        cardHTML += `<tr class="break-row"><td>Break</td><td colspan="5">Break Time 4:55-5:25</td></tr>`;
+                    }
+                    if (p === 4) {
+                        cardHTML += `<tr class="break-row"><td>Lunch</td><td colspan="5">Lunch Time 7:00-7:40</td></tr>`;
+                    }
                 }
 
                 cardHTML += `
@@ -1126,14 +1237,16 @@
         }
         
         if (orientation === 'landscape') {
-            printStyle.innerHTML = `@page { size: 297mm 210mm; margin: 10mm; } body { width: 297mm; }`;
+            printStyle.innerHTML = `@page { size: 297mm 210mm; margin: 8mm; } body { width: 297mm; }`;
         } else {
-            printStyle.innerHTML = `@page { size: 210mm 297mm; margin: 10mm; } body { width: 210mm; }`;
+            printStyle.innerHTML = `@page { size: 210mm 297mm; margin: 8mm; } body { width: 210mm; }`;
         }
         
         window.print();
     }
 
+    // Initialize application state from localStorage on load
+    loadSavedData();
     initDropdowns();
     renderSubjects();
 </script>
