@@ -8,13 +8,17 @@
         :root {
             --primary: #4361ee;
             --primary-hover: #3a0ca3;
-            --bg-color: #f8f9fa;
+            --bg-color: #f4f6f9;
             --card-bg: #ffffff;
-            --text-color: #333333;
-            --border-color: #dee2e6;
+            --text-color: #2b2d42;
+            --border-color: #cbd5e1;
+            
+            /* Section Accent Colors */
+            --accent-global: #e0f2fe; /* Soft Blue */
+            --accent-subject: #fef3c7; /* Soft Amber */
+            --accent-scope: #ede9fe;  /* Soft Purple */
         }
 
-        /* Universal Box-Sizing & Responsive Foundation */
         * {
             box-sizing: border-box;
         }
@@ -35,15 +39,16 @@
 
         .container {
             width: 100%;
-            max-width: 1300px;
+            max-width: 1350px;
             margin: 0 auto;
         }
 
         h1 {
             font-size: 1.5rem;
             text-align: center;
-            color: #2b2d42;
+            color: #1e293b;
             margin-bottom: 20px;
+            font-weight: 800;
         }
 
         @media (min-width: 768px) {
@@ -53,36 +58,49 @@
         }
 
         h2, h3 {
-            color: #2b2d42;
+            color: #1e293b;
             text-align: center;
             font-size: 1.2rem;
+            margin-top: 0;
         }
 
         @media (min-width: 768px) {
             h2, h3 {
-                font-size: 1.4rem;
+                font-size: 1.35rem;
             }
         }
 
         .card {
             background: var(--card-bg);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
             width: 100%;
+            position: relative;
+            border: 1px solid #e2e8f0;
         }
 
-        @media (min-width: 768px) {
-            .card {
-                padding: 20px;
-            }
+        /* Distinct thematic background accents for pre-generation cards */
+        .card-global {
+            background: linear-gradient(to bottom right, #ffffff, var(--accent-global));
+            border-left: 5px solid #0284c7;
+        }
+
+        .card-subjects {
+            background: linear-gradient(to bottom right, #ffffff, var(--accent-subject));
+            border-left: 5px solid #d97706;
+        }
+
+        .card-scope {
+            background: linear-gradient(to bottom right, #ffffff, var(--accent-scope));
+            border-left: 5px solid #7c3aed;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 14px;
             align-items: end;
             margin-bottom: 15px;
         }
@@ -95,7 +113,7 @@
 
         @media (min-width: 1024px) {
             .form-row {
-                grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr auto;
+                grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr auto;
             }
         }
 
@@ -107,18 +125,27 @@
 
         label {
             font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #334155;
         }
 
         input, select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 10px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.95rem;
             background-color: #fff;
+            color: #0f172a;
+            transition: all 0.2s ease;
             -webkit-appearance: none;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
         }
 
         button {
@@ -127,11 +154,11 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
 
         @media (min-width: 1024px) {
@@ -144,24 +171,28 @@
             background-color: var(--primary-hover);
         }
 
+        button:active {
+            transform: scale(0.98);
+        }
+
         .btn-danger {
-            background-color: #e63946;
+            background-color: #ef4444;
             padding: 6px 10px;
             font-size: 0.8rem;
         }
         .btn-danger:hover {
-            background-color: #d90429;
+            background-color: #dc2626;
         }
 
         .btn-warning {
-            background-color: #fb8500;
+            background-color: #f59e0b;
             padding: 6px 10px;
             font-size: 0.8rem;
             color: white;
             margin-right: 4px;
         }
         .btn-warning:hover {
-            background-color: #e85d04;
+            background-color: #d97706;
         }
 
         .action-btns {
@@ -175,13 +206,15 @@
             max-height: 250px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
         }
 
         .table-responsive {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            margin-top: 15px;
         }
 
         table {
@@ -193,13 +226,15 @@
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 8px;
+            padding: 10px 8px;
             text-align: center;
             font-size: 0.85rem;
         }
 
         th {
-            background-color: #e9ecef;
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
         }
 
         .slot-pill {
@@ -213,24 +248,23 @@
         }
 
         .error {
-            color: #e63946;
+            color: #ef4444;
             font-weight: bold;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
             font-size: 0.9rem;
         }
 
         .global-settings {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
         @media (min-width: 768px) {
             .global-settings {
-                flex-direction: row;
-                align-items: center;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
@@ -239,9 +273,10 @@
             grid-template-columns: 1fr;
             gap: 15px;
             margin-bottom: 20px;
-            background: #f1f3f5;
-            padding: 15px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ddd6fe;
+            padding: 18px;
+            border-radius: 8px;
         }
 
         @media (min-width: 768px) {
@@ -264,6 +299,46 @@
             }
         }
 
+        /* Option Tabs Styling */
+        .options-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .option-tab {
+            padding: 10px 20px;
+            background-color: #e2e8f0;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #475569;
+            transition: all 0.2s;
+        }
+        .option-tab.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Watermark Styles */
+        .watermark-container {
+            position: relative;
+        }
+        .watermark-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.08;
+            max-width: 400px;
+            max-height: 400px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* General Print Cleanup & Scaling Styles */
         @media print {
             body {
@@ -281,7 +356,8 @@
             .generation-options,
             button, 
             #errorMsg,
-            #printActionCard {
+            #printActionCard,
+            .options-tabs {
                 display: none !important;
             }
 
@@ -291,15 +367,11 @@
                 padding: 0;
                 margin: 0;
                 width: 100%;
+                page-break-after: always;
             }
 
             .table-responsive {
                 overflow: visible !important;
-            }
-
-            #outputContainer .card {
-                page-break-after: always;
-                margin-bottom: 10px;
             }
 
             table {
@@ -331,14 +403,38 @@
     <h1>Smart Multi-Grade & Multi-Section Timetable Generator</h1>
     
     <!-- Config Card -->
-    <div class="card">
-        <h2>1. Global School Settings</h2>
+    <div class="card card-global">
+        <h2>1. Global School Settings & Formatting</h2>
         <div class="global-settings">
-            <div class="form-group" style="flex:1;">
+            <div class="form-group">
                 <label for="periodsPerDay">Number of Periods Per Day (Max 8)</label>
                 <input type="number" id="periodsPerDay" value="7" min="1" max="8" onchange="updatePeriodDropdowns()">
             </div>
-            <div class="form-group" style="flex:1;">
+            <div class="form-group">
+                <label for="timetableFormat">Timetable Layout Style</label>
+                <select id="timetableFormat">
+                    <option value="highschool">Print Highschool format (Master Grid)</option>
+                    <option value="primary">Print primary format</option>
+                    <option value="kg">Print KG format</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pageTitleInput">Print Page Title / Header text</label>
+                <input type="text" id="pageTitleInput" value="Adika Youth Academy High School Tentative Class Schedule">
+            </div>
+            <div class="form-group">
+                <label for="logoUrl">School Logo URL (Image link)</label>
+                <input type="text" id="logoUrl" placeholder="https://example.com/logo.png">
+            </div>
+            <div class="form-group">
+                <label for="logoPosition">Logo Placement Option</label>
+                <select id="logoPosition">
+                    <option value="top">Top Header</option>
+                    <option value="watermark">Watermark</option>
+                    <option value="bottom">Bottom Footer</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="activeGradeSelect">Filter View By Grade Level</label>
                 <select id="activeGradeSelect" onchange="renderSubjects()">
                     <option value="ALL">Show All Grades/Sections</option>
@@ -348,8 +444,8 @@
     </div>
 
     <!-- Subject Inputs Card -->
-    <div class="card">
-        <h2 id="formTitle">2. Add Subject & Class Information</h2>
+    <div class="card card-subjects">
+        <h2 id="formTitle">2. Add Subject, Teacher & Class Information</h2>
         <input type="hidden" id="editIndex" value="-1">
         <div class="form-row">
             <div class="form-group">
@@ -357,8 +453,19 @@
                 <input type="text" id="subjectName" placeholder="e.g. Mathematics">
             </div>
             <div class="form-group">
+                <label for="teacherName">Teacher Name</label>
+                <input type="text" id="teacherName" placeholder="e.g. Mr. John">
+            </div>
+            <div class="form-group">
                 <label for="credits">Credits/Week</label>
                 <input type="number" id="credits" min="1" max="15" value="4">
+            </div>
+            <div class="form-group">
+                <label for="allowDouble">Allow Double Class?</label>
+                <select id="allowDouble">
+                    <option value="no">No Double Class</option>
+                    <option value="yes">Allow Double Class</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="gradeLevel">Grade Level</label>
@@ -375,11 +482,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="fromPeriod">From Period</label>
+                <label for="fromPeriod">From Period Window</label>
                 <select id="fromPeriod"></select>
             </div>
             <div class="form-group">
-                <label for="toPeriod">To Period</label>
+                <label for="toPeriod">To Period Window</label>
                 <select id="toPeriod"></select>
             </div>
             <div class="form-group">
@@ -394,9 +501,11 @@
                     <thead>
                         <tr>
                             <th>Subject</th>
-                            <th>Credits / Week</th>
+                            <th>Teacher</th>
+                            <th>Credits</th>
+                            <th>Double?</th>
                             <th>Grade & Section</th>
-                            <th>Allowed Period Window</th>
+                            <th>Window</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -405,59 +514,62 @@
             </div>
         </div>
 
-        <hr style="margin: 20px 0; border:0; border-top:1px solid #dee2e6;">
+        <hr style="margin: 25px 0; border:0; border-top:1px solid #cbd5e1;">
 
         <h3>3. Generation Scope Settings</h3>
-        <div class="generation-options">
-            <div class="form-group">
-                <label for="genMode">Generation Mode</label>
-                <select id="genMode" onchange="toggleGenMode()">
-                    <option value="all">All Grades & Sections</option>
-                    <option value="range">Grade Range (Single Master Table)</option>
-                    <option value="single">Single Grade & Section</option>
-                </select>
-            </div>
-            <div class="form-group" id="rangeStartGroup" style="display:none;">
-                <label for="rangeStart">From Grade</label>
-                <select id="rangeStart"></select>
-            </div>
-            <div class="form-group" id="rangeEndGroup" style="display:none;">
-                <label for="rangeEnd">To Grade</label>
-                <select id="rangeEnd"></select>
-            </div>
-            <div class="form-group" id="singleGradeGroup" style="display:none;">
-                <label for="singleGrade">Target Grade</label>
-                <select id="singleGrade"></select>
-            </div>
-            <div class="form-group" id="singleSectionGroup" style="display:none;">
-                <label for="singleSection">Target Section</label>
-                <select id="singleSection">
-                    <option value="A">Section A</option>
-                    <option value="B">Section B</option>
-                    <option value="C">Section C</option>
-                    <option value="D">Section D</option>
-                    <option value="E">Section E</option>
-                </select>
+        <div class="card card-scope" style="border: none; box-shadow: none; margin-bottom: 0; padding: 0;">
+            <div class="generation-options">
+                <div class="form-group">
+                    <label for="genMode">Generation Mode</label>
+                    <select id="genMode" onchange="toggleGenMode()">
+                        <option value="all">All Grades & Sections</option>
+                        <option value="range">Grade Range (Master Table)</option>
+                        <option value="single">Single Grade & Section</option>
+                    </select>
+                </div>
+                <div class="form-group" id="rangeStartGroup" style="display:none;">
+                    <label for="rangeStart">From Grade</label>
+                    <select id="rangeStart"></select>
+                </div>
+                <div class="form-group" id="rangeEndGroup" style="display:none;">
+                    <label for="rangeEnd">To Grade</label>
+                    <select id="rangeEnd"></select>
+                </div>
+                <div class="form-group" id="singleGradeGroup" style="display:none;">
+                    <label for="singleGrade">Target Grade</label>
+                    <select id="singleGrade"></select>
+                </div>
+                <div class="form-group" id="singleSectionGroup" style="display:none;">
+                    <label for="singleSection">Target Section</label>
+                    <select id="singleSection">
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                        <option value="C">Section C</option>
+                        <option value="D">Section D</option>
+                        <option value="E">Section E</option>
+                    </select>
+                </div>
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 15px;">
-            <button onclick="generateTimetable()" style="font-size: 1.1rem; padding: 12px 24px; width:100%; max-width:350px;">Generate Non-Overlapping Timetables</button>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="generateTimetable()" style="font-size: 1.1rem; padding: 14px 28px; width:100%; max-width:380px; background: linear-gradient(135deg, #4361ee, #3a0ca3); box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);">⚡ Generate 3 Timetable Options</button>
         </div>
         <div id="errorMsg" class="error"></div>
     </div>
 
     <!-- Print / Export Options Card -->
-    <div class="card" id="printActionCard" style="display: none; background-color: #f1f3f5; text-align: center;">
+    <div class="card" id="printActionCard" style="display: none; background-color: #f8fafc; text-align: center;">
         <h2>4. Print or Save Timetables as PDF</h2>
-        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #555;">Choose your preferred printing format orientation:</p>
+        <p style="margin-bottom: 15px; font-size: 0.9rem; color: #475569;">Choose your preferred printing orientation (Prints the currently active option tab):</p>
         <div class="export-buttons">
-            <button onclick="printTimetable('portrait')" style="background-color: #2b2d42;">🖨️ Print / Save as PDF (Portrait)</button>
+            <button onclick="printTimetable('portrait')" style="background-color: #1e293b;">🖨️ Print / Save as PDF (Portrait)</button>
             <button onclick="printTimetable('landscape')" style="background-color: #4361ee;">🖨️ Print / Save as PDF (Landscape)</button>
         </div>
     </div>
 
-    <!-- Output Timetable Cards Container -->
+    <!-- Output Timetable Container with Alternative Tabs -->
+    <div id="optionsTabContainer"></div>
     <div id="outputContainer"></div>
 </div>
 
@@ -470,13 +582,16 @@
     ];
 
     let subjects = [
-        { id: 1, name: "Mathematics", credits: 5, grade: "Grade 12", section: "A", from: 1, to: 7 },
-        { id: 2, name: "English", credits: 4, grade: "Grade 12", section: "A", from: 1, to: 7 },
-        { id: 3, name: "Mathematics", credits: 5, grade: "Grade 12", section: "B", from: 1, to: 7 },
-        { id: 4, name: "Physics", credits: 3, grade: "Grade 12", section: "B", from: 1, to: 7 },
-        { id: 5, name: "Chemistry", credits: 4, grade: "Grade 10", section: "A", from: 1, to: 7 },
-        { id: 6, name: "Biology", credits: 4, grade: "Grade 9", section: "A", from: 1, to: 7 }
+        { id: 1, name: "Mathematics", teacher: "Mr. Abebe", credits: 5, allowDouble: "yes", grade: "Grade 12", section: "A", from: 1, to: 7 },
+        { id: 2, name: "English", teacher: "Ms. Sara", credits: 4, allowDouble: "no", grade: "Grade 12", section: "A", from: 1, to: 7 },
+        { id: 3, name: "Mathematics", teacher: "Mr. Abebe", credits: 5, allowDouble: "yes", grade: "Grade 12", section: "B", from: 1, to: 7 },
+        { id: 4, name: "Physics", teacher: "Mr. Dawit", credits: 3, allowDouble: "no", grade: "Grade 12", section: "B", from: 1, to: 7 },
+        { id: 5, name: "Chemistry", teacher: "Dr. Kebede", credits: 4, allowDouble: "no", grade: "Grade 10", section: "A", from: 1, to: 7 }
     ];
+
+    let generatedOptions = [];
+    let currentOptionIndex = 0;
+    let cachedTargetClassKeys = [];
 
     function getShortSubjectName(fullName) {
         if (!fullName) return "";
@@ -490,7 +605,8 @@
             "HISTORY": "HIST", "GEOGRAPHY": "GEO", "COMPUTER SCIENCE": "COMP",
             "INFORMATION TECHNOLOGY": "IT", "PHYSICAL EDUCATION": "PE",
             "ARTS": "ART", "MUSIC": "MUS", "ECONOMICS": "ECO",
-            "BUSINESS": "BUS", "MORAL EDUCATION": "MOR", "ISLAMIC STUDIES": "ISL"
+            "BUSINESS": "BUS", "MORAL EDUCATION": "MOR", "ISLAMIC STUDIES": "ISL",
+            "CITIZENSHIP": "CIT", "MARKETING": "MKT"
         };
 
         if (map[upper]) return map[upper];
@@ -570,10 +686,12 @@
             if (activeFilter === 'ALL' || subj.grade === activeFilter) {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${subj.name} <small style="color:#666;">(${getShortSubjectName(subj.name)})</small></td>
+                        <td>${subj.name} <small style="color:#64748b;">(${getShortSubjectName(subj.name)})</small></td>
+                        <td>${subj.teacher || 'Unassigned'}</td>
                         <td>${subj.credits}</td>
+                        <td>${subj.allowDouble === 'yes' ? 'Yes' : 'No'}</td>
                         <td><strong>${subj.grade} - Section ${subj.section}</strong></td>
-                        <td>Period ${subj.from} to Period ${subj.to}</td>
+                        <td>Period ${subj.from} to ${subj.to}</td>
                         <td>
                             <div class="action-btns">
                                 <button type="button" class="btn-warning" onclick="editSubject(${index})">Edit</button>
@@ -588,7 +706,9 @@
 
     function saveSubject() {
         const nameInput = document.getElementById('subjectName');
+        const teacherInput = document.getElementById('teacherName');
         const creditsInput = document.getElementById('credits');
+        const allowDoubleSelect = document.getElementById('allowDouble');
         const gradeSelect = document.getElementById('gradeLevel');
         const sectionSelect = document.getElementById('sectionName');
         const fromSelect = document.getElementById('fromPeriod');
@@ -599,7 +719,9 @@
         errorMsg.textContent = '';
 
         const name = nameInput.value.trim();
+        const teacher = teacherInput.value.trim() || "Staff";
         const credits = parseInt(creditsInput.value);
+        const allowDouble = allowDoubleSelect.value;
         const grade = gradeSelect.value;
         const section = sectionSelect.value;
         const from = parseInt(fromSelect.value);
@@ -623,22 +745,25 @@
         }
 
         if (editIndex === -1) {
-            subjects.push({ id: Date.now(), name, credits, grade, section, from, to });
+            subjects.push({ id: Date.now(), name, teacher, credits, allowDouble, grade, section, from, to });
         } else {
-            subjects[editIndex] = { ...subjects[editIndex], name, credits, grade, section, from, to };
+            subjects[editIndex] = { ...subjects[editIndex], name, teacher, credits, allowDouble, grade, section, from, to };
             editIndexInput.value = -1;
-            document.getElementById('formTitle').textContent = "2. Add Subject & Class Information";
+            document.getElementById('formTitle').textContent = "2. Add Subject, Teacher & Class Information";
             document.getElementById('saveButton').textContent = "Add Subject";
         }
         
         nameInput.value = '';
+        teacherInput.value = '';
         renderSubjects();
     }
 
     function editSubject(index) {
         const subj = subjects[index];
         document.getElementById('subjectName').value = subj.name;
+        document.getElementById('teacherName').value = subj.teacher || '';
         document.getElementById('credits').value = subj.credits;
+        document.getElementById('allowDouble').value = subj.allowDouble || 'no';
         document.getElementById('gradeLevel').value = subj.grade;
         document.getElementById('sectionName').value = subj.section;
         document.getElementById('fromPeriod').value = subj.from;
@@ -655,14 +780,136 @@
         renderSubjects();
     }
 
+    function runSingleGeneration(targetClassKeys, periodsPerDay, days) {
+        let teacherBusyMap = {};
+        let classGrids = {};
+        
+        let sortedKeys = [...targetClassKeys].sort((a,b) => {
+            let loadA = subjects.filter(s => `${s.grade}___${s.section}` === a).reduce((sum,s)=>sum+s.credits,0);
+            let loadB = subjects.filter(s => `${s.grade}___${s.section}` === b).reduce((sum,s)=>sum+s.credits,0);
+            return loadB - loadA;
+        });
+
+        for (let key of sortedKeys) {
+            const [grade, section] = key.split('___');
+            const classSubjects = subjects.filter(s => s.grade === grade && s.section === section);
+            if (classSubjects.length === 0) continue;
+
+            const totalSlotsAvailable = days.length * periodsPerDay;
+            const totalCredits = classSubjects.reduce((sum, s) => sum + s.credits, 0);
+
+            if (totalCredits > totalSlotsAvailable) {
+                return { error: `Class [${grade} - Sec ${section}] credits requested (${totalCredits}) exceed available slots (${totalSlotsAvailable}).` };
+            }
+
+            let grid = {};
+            days.forEach(day => {
+                grid[day] = new Array(periodsPerDay).fill(null);
+            });
+
+            let allocationPool = [];
+            classSubjects.forEach(subj => {
+                let remCredits = subj.credits;
+                let normalizedTeacher = (subj.teacher || "Staff").trim().toLowerCase();
+
+                while (remCredits > 0) {
+                    let takeDouble = (subj.allowDouble === 'yes' && remCredits >= 2 && Math.random() > 0.4);
+                    let blockLen = takeDouble ? 2 : 1;
+                    allocationPool.push({
+                        name: subj.name,
+                        shortName: getShortSubjectName(subj.name),
+                        teacher: normalizedTeacher,
+                        displayTeacher: subj.teacher || "Staff",
+                        length: blockLen,
+                        from: Math.max(0, subj.from - 1),
+                        to: Math.min(periodsPerDay - 1, subj.to - 1)
+                    });
+                    remCredits -= blockLen;
+                }
+            });
+
+            allocationPool.sort(() => Math.random() - 0.5);
+
+            for (let item of allocationPool) {
+                let placed = false;
+                let shuffledDays = [...days].sort(() => Math.random() - 0.5);
+
+                for (let day of shuffledDays) {
+                    if (placed) break;
+                    
+                    let periodIndices = [];
+                    for (let p = item.from; p <= item.to; p++) {
+                        if (item.length === 2 && p + 1 <= item.to) {
+                            periodIndices.push([p, p + 1]);
+                        } else if (item.length === 1) {
+                            periodIndices.push([p]);
+                        }
+                    }
+                    periodIndices.sort(() => Math.random() - 0.5);
+
+                    for (let pGroup of periodIndices) {
+                        let canPlace = true;
+                        for (let p of pGroup) {
+                            if (grid[day][p] !== null) { canPlace = false; break; }
+                            let keyTP = `${day}_${p}`;
+                            if (teacherBusyMap[keyTP] && teacherBusyMap[keyTP].has(item.teacher)) {
+                                canPlace = false;
+                                break;
+                            }
+                        }
+
+                        if (canPlace) {
+                            for (let p of pGroup) {
+                                grid[day][p] = { name: item.name, shortName: item.shortName, teacher: item.displayTeacher };
+                                let keyTP = `${day}_${p}`;
+                                if (!teacherBusyMap[keyTP]) teacherBusyMap[keyTP] = new Set();
+                                teacherBusyMap[keyTP].add(item.teacher);
+                            }
+                            placed = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!placed) {
+                    for (let day of days) {
+                        if (placed) break;
+                        for (let p = item.from; p <= item.to; p++) {
+                            let pGroup = item.length === 2 && p + 1 <= item.to ? [p, p+1] : [p];
+                            let canPlaceFallback = true;
+                            for (let pr of pGroup) {
+                                if (grid[day][pr] !== null) { canPlaceFallback = false; break; }
+                                let keyTP = `${day}_${pr}`;
+                                if (teacherBusyMap[keyTP] && teacherBusyMap[keyTP].has(item.teacher)) {
+                                    canPlaceFallback = false;
+                                    break;
+                                }
+                            }
+                            if (canPlaceFallback) {
+                                for (let pr of pGroup) {
+                                    grid[day][pr] = { name: item.name, shortName: item.shortName, teacher: item.displayTeacher };
+                                    let keyTP = `${day}_${pr}`;
+                                    if (!teacherBusyMap[keyTP]) teacherBusyMap[keyTP] = new Set();
+                                    teacherBusyMap[keyTP].add(item.teacher);
+                                }
+                                placed = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            classGrids[key] = { grid };
+        }
+        return { classGrids };
+    }
+
     function generateTimetable() {
         const errorMsg = document.getElementById('errorMsg');
         errorMsg.textContent = '';
 
         const periodsPerDay = parseInt(document.getElementById('periodsPerDay').value);
         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-        const outputContainer = document.getElementById('outputContainer');
-        outputContainer.innerHTML = '';
 
         if (subjects.length === 0) {
             errorMsg.textContent = "Please add at least one subject.";
@@ -702,97 +949,84 @@
             return;
         }
 
-        function buildGridForClass(grade, section) {
-            const classSubjects = subjects.filter(s => s.grade === grade && s.section === section);
-            if (classSubjects.length === 0) return null;
+        cachedTargetClassKeys = targetClassKeys;
+        generatedOptions = [];
+        let attempts = 0;
 
-            const totalSlotsAvailable = days.length * periodsPerDay;
-            const totalCredits = classSubjects.reduce((sum, s) => sum + s.credits, 0);
-
-            if (totalCredits > totalSlotsAvailable) {
-                return { error: `Credits requested (${totalCredits}) exceed available slots (${totalSlotsAvailable}).` };
+        while (generatedOptions.length < 3 && attempts < 25) {
+            attempts++;
+            let res = runSingleGeneration(targetClassKeys, periodsPerDay, days);
+            if (!res.error) {
+                generatedOptions.push(res.classGrids);
+            } else if (attempts === 1) {
+                errorMsg.textContent = res.error;
+                return;
             }
-
-            let grid = {};
-            days.forEach(day => {
-                grid[day] = new Array(periodsPerDay).fill(null);
-            });
-
-            let allocationPool = [];
-            classSubjects.forEach(subj => {
-                for (let i = 0; i < subj.credits; i++) {
-                    allocationPool.push({ 
-                        name: subj.name, 
-                        shortName: getShortSubjectName(subj.name),
-                        from: Math.max(0, subj.from - 1), 
-                        to: Math.min(periodsPerDay - 1, subj.to - 1) 
-                    });
-                }
-            });
-
-            allocationPool.sort(() => Math.random() - 0.5);
-
-            for (let item of allocationPool) {
-                let placed = false;
-                let shuffledDays = [...days].sort(() => Math.random() - 0.5);
-
-                let periodOrder = [];
-                for (let p = item.from; p <= item.to; p++) periodOrder.push(p);
-                periodOrder.sort(() => Math.random() - 0.5);
-
-                for (let day of shuffledDays) {
-                    if (placed) break;
-                    for (let p of periodOrder) {
-                        const alreadyOnThisDay = grid[day].some(s => s && s.name === item.name);
-
-                        if (grid[day][p] === null && !alreadyOnThisDay) {
-                            grid[day][p] = { name: item.name, shortName: item.shortName };
-                            placed = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!placed) {
-                    for (let day of days) {
-                        if (placed) break;
-                        for (let p = item.from; p <= item.to; p++) {
-                            if (grid[day][p] === null) {
-                                grid[day][p] = { name: item.name, shortName: item.shortName };
-                                placed = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            return { grid };
         }
 
-        if (genMode === 'range') {
+        if (generatedOptions.length === 0) {
+            errorMsg.textContent = "Could not generate valid non-overlapping options. Please review your credit limits and periods.";
+            return;
+        }
+
+        currentOptionIndex = 0;
+        renderActiveOption();
+        document.getElementById('printActionCard').style.display = 'block';
+    }
+
+    function switchOption(index) {
+        currentOptionIndex = index;
+        renderActiveOption();
+    }
+
+    function renderActiveOption() {
+        const optionsTabContainer = document.getElementById('optionsTabContainer');
+        const outputContainer = document.getElementById('outputContainer');
+        
+        optionsTabContainer.innerHTML = '';
+        outputContainer.innerHTML = '';
+
+        if (generatedOptions.length > 1) {
+            let tabsHTML = `<div class="options-tabs">`;
+            generatedOptions.forEach((_, idx) => {
+                let activeClass = (idx === currentOptionIndex) ? 'active' : '';
+                tabsHTML += `<div class="option-tab ${activeClass}" onclick="switchOption(${idx})">Option ${idx + 1}</div>`;
+            });
+            tabsHTML += `</div>`;
+            optionsTabContainer.innerHTML = tabsHTML;
+        }
+
+        const classGrids = generatedOptions[currentOptionIndex];
+        const targetClassKeys = cachedTargetClassKeys;
+        const periodsPerDay = parseInt(document.getElementById('periodsPerDay').value);
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        const formatType = document.getElementById('timetableFormat').value;
+        const pageTitle = document.getElementById('pageTitleInput').value || "School Timetable";
+        const logoUrl = document.getElementById('logoUrl').value.trim();
+        const logoPos = document.getElementById('logoPosition').value;
+
+        let logoHTMLTop = (logoUrl && logoPos === 'top') ? `<div style="text-align:center; margin-bottom:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:60px;"></div>` : '';
+        let logoHTMLBottom = (logoUrl && logoPos === 'bottom') ? `<div style="text-align:center; margin-top:10px;"><img src="${logoUrl}" alt="School Logo" style="max-height:60px;"></div>` : '';
+        let logoHTMLWatermark = (logoUrl && logoPos === 'watermark') ? `<img src="${logoUrl}" class="watermark-img" alt="Watermark">` : '';
+
+        if (formatType === 'highschool' || document.getElementById('genMode').value === 'range') {
             let masterHTML = `
-                <div class="card">
-                    <h2>Master Timetable: Grade Range View</h2>
+                <div class="card watermark-container">
+                    ${logoHTMLWatermark}
+                    ${logoHTMLTop}
+                    <h2>${pageTitle} (Option ${currentOptionIndex + 1})</h2>
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="vertical-align: middle;">Grade & Section</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Days</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Period</th>
+                                    <th rowspan="2" style="vertical-align: middle;">Time</th>
             `;
             
-            days.forEach(day => {
-                masterHTML += `<th colspan="${periodsPerDay}">${day}</th>`;
-            });
-
-            masterHTML += `
-                                </tr>
-                                <tr>
-            `;
-            
-            days.forEach(() => {
-                for (let p = 1; p <= periodsPerDay; p++) {
-                    masterHTML += `<th>P${p}</th>`;
-                }
+            targetClassKeys.forEach(key => {
+                const [grade, section] = key.split('___');
+                masterHTML += `<th>${grade} ${section}</th>`;
             });
 
             masterHTML += `
@@ -801,51 +1035,50 @@
                             <tbody>
             `;
 
-            let hasValidRows = false;
-            targetClassKeys.forEach(key => {
-                const [grade, section] = key.split('___');
-                const result = buildGridForClass(grade, section);
-                if (!result || result.error) return;
+            let timeSlots = [
+                "2:40-3:25", "3:25-4:10", "4:10-4:55", 
+                "5:30-6:15", "6:15-7:00", "7:45-8:30", "8:30-9:15", "9:15-10:00"
+            ];
 
-                hasValidRows = true;
-                masterHTML += `<tr><td><strong>${grade} - Sec ${section}</strong></td>`;
-                
-                days.forEach(day => {
-                    for (let p = 0; p < periodsPerDay; p++) {
-                        let cellContent = result.grid[day][p] ? `<div class="slot-pill" title="${result.grid[day][p].name}">${result.grid[day][p].shortName}</div>` : `<span style="color:#ccc;">-</span>`;
-                        masterHTML += `<td>${cellContent}</td>`;
+            days.forEach((day, dIdx) => {
+                for (let p = 0; p < periodsPerDay; p++) {
+                    masterHTML += `<tr>`;
+                    if (p === 0) {
+                        masterHTML += `<td rowspan="${periodsPerDay}" style="font-weight:bold; vertical-align:middle; background:#f8fafc;">${day}</td>`;
                     }
-                });
-                masterHTML += `</tr>`;
+                    masterHTML += `<td><strong>P ${p + 1}</strong></td>`;
+                    masterHTML += `<td style="font-size:0.75rem; color:#475569;">${timeSlots[p] || ''}</td>`;
+
+                    targetClassKeys.forEach(key => {
+                        let classData = classGrids[key];
+                        let slotObj = classData && classData.grid[day] ? classData.grid[day][p] : null;
+                        let cellContent = slotObj ? `<div class="slot-pill" title="${slotObj.name} (${slotObj.teacher})">${slotObj.shortName}</div>` : `<span style="color:#cbd5e1;">Free</span>`;
+                        masterHTML += `<td>${cellContent}</td>`;
+                    });
+                    masterHTML += `</tr>`;
+                }
             });
 
             masterHTML += `
                             </tbody>
                         </table>
                     </div>
+                    ${logoHTMLBottom}
                 </div>
             `;
-
-            if (hasValidRows) {
-                outputContainer.innerHTML += masterHTML;
-            } else {
-                errorMsg.textContent = "No valid schedules could be built for the selected range.";
-            }
+            outputContainer.innerHTML += masterHTML;
 
         } else {
             for (let key of targetClassKeys) {
                 const [grade, section] = key.split('___');
-                const result = buildGridForClass(grade, section);
-
-                if (!result) continue;
-                if (result.error) {
-                    errorMsg.innerHTML += `[${grade} - Section ${section}] Error: ${result.error}<br>`;
-                    continue;
-                }
+                let classData = classGrids[key];
+                if (!classData) continue;
 
                 let cardHTML = `
-                    <div class="card">
-                        <h2>Timetable for: ${grade} — Section ${section}</h2>
+                    <div class="card watermark-container">
+                        ${logoHTMLWatermark}
+                        ${logoHTMLTop}
+                        <h2>${pageTitle} — ${grade} Section ${section} (Option ${currentOptionIndex + 1})</h2>
                         <div class="table-responsive">
                             <table>
                                 <thead>
@@ -864,7 +1097,8 @@
                 for (let p = 0; p < periodsPerDay; p++) {
                     cardHTML += `<tr><td><strong>P ${p + 1}</strong></td>`;
                     days.forEach(day => {
-                        let cellContent = result.grid[day][p] ? `<div class="slot-pill" title="${result.grid[day][p].name}">${result.grid[day][p].shortName}</div>` : `<span style="color:#ccc;">Free</span>`;
+                        let slotObj = classData.grid[day][p];
+                        let cellContent = slotObj ? `<div class="slot-pill" title="${slotObj.name} (${slotObj.teacher})">${slotObj.shortName}</div>` : `<span style="color:#cbd5e1;">Free</span>`;
                         cardHTML += `<td>${cellContent}</td>`;
                     });
                     cardHTML += `</tr>`;
@@ -874,13 +1108,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        ${logoHTMLBottom}
                     </div>
                 `;
                 outputContainer.innerHTML += cardHTML;
             }
         }
-
-        document.getElementById('printActionCard').style.display = 'block';
     }
 
     function printTimetable(orientation) {
